@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:segundo_plano_personalizado/notifications/notificaciones.dart';
 import 'package:segundo_plano_personalizado/ui/configuracion/provider/configuracion_provider.dart';
 
 class ConfiguracionScreen extends StatelessWidget {
@@ -91,6 +92,20 @@ class ConfiguracionScreen extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                              minimumSize: const Size(70, 22)
+                            ),
+                            onPressed: () {
+                              Notificaciones().mostrar('AgroGeo Despachos', "Notificación personalizada");
+                            },
+                            child: const Text(
+                                'Mostrar notificación',
+                                style: TextStyle(fontSize: 12))),
                       ),
                     ]),
               )),

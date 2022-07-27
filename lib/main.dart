@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:segundo_plano_personalizado/notifications/notificaciones.dart';
@@ -7,8 +9,15 @@ import 'package:workmanager/workmanager.dart';
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    await Notificaciones.init();
     Notificaciones().mostrar('AgroGeo Despachos', task);
+    if (Platform.isIOS) {
+      Workmanager().registerOneOffTask(
+          task, "Sincronizando visitas terminadas...",
+          tag: task,
+          constraints: Constraints(
+              networkType: NetworkType.connected, requiresBatteryNotLow: true),
+          initialDelay: const Duration(minutes: 15));
+    }
     return Future.value(true);
   });
 }
@@ -22,6 +31,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Notificaciones.init();
     Workmanager().initialize(
         callbackDispatcher, // The top level function, aka callbackDispatcher
         isInDebugMode:
