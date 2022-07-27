@@ -21,7 +21,7 @@ class ConfiguracionProvider extends ChangeNotifier {
     _guardaValorBoolPorLlave(spLlaveObtieneAsignAuto, value);
     if (value) {
       Workmanager().registerPeriodicTask(
-          "ObteniendoAsignaciones", "Obteniendo asignaciones...",
+          "tagobtieneasignacionesauto", "Obteniendo asignaciones...",
           tag: "tagobtieneasignacionesauto",
           frequency: const Duration(minutes: 15),
           constraints: Constraints(
