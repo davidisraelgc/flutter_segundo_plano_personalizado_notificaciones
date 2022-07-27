@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/widgets.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,13 +22,24 @@ class ConfiguracionProvider extends ChangeNotifier {
     obtenerAsignacionesAutomaticamente = value;
     _guardaValorBoolPorLlave(spLlaveObtieneAsignAuto, value);
     if (value) {
-      Workmanager().registerPeriodicTask(
-          "ObteniendoAsignaciones", "Obteniendo asignaciones...",
-          tag: "tagobtieneasignacionesauto",
-          frequency: const Duration(minutes: 15),
-          constraints: Constraints(
-              networkType: NetworkType.connected, requiresBatteryNotLow: true),
-          initialDelay: const Duration(minutes: 15));
+      if (Platform.isAndroid) {
+        Workmanager().registerPeriodicTask(
+            "tagobtieneasignacionesauto", "Obteniendo asignaciones...",
+            tag: "tagobtieneasignacionesauto",
+            frequency: const Duration(minutes: 15),
+            constraints: Constraints(
+                networkType: NetworkType.connected,
+                requiresBatteryNotLow: true),
+            initialDelay: const Duration(minutes: 15));
+      } else {
+        Workmanager().registerOneOffTask(
+            "tagobtieneasignacionesauto", "Obteniendo asignaciones...",
+            tag: "tagobtieneasignacionesauto",
+            constraints: Constraints(
+                networkType: NetworkType.connected,
+                requiresBatteryNotLow: true),
+            initialDelay: const Duration(minutes: 15));
+      }
     } else {
       Workmanager().cancelByTag("tagobtieneasignacionesauto");
     }
@@ -37,13 +50,24 @@ class ConfiguracionProvider extends ChangeNotifier {
     sincronizarAutomaticamente = value;
     _guardaValorBoolPorLlave(spLlaveSincronizaAuto, value);
     if (value) {
-      Workmanager().registerPeriodicTask(
-          "SincVisitasTerminadas", "Sincronizando visitas terminadas...",
-          tag: "tagsincronizavisitasterminadas",
-          frequency: const Duration(minutes: 15),
-          constraints: Constraints(
-              networkType: NetworkType.connected, requiresBatteryNotLow: true),
-          initialDelay: const Duration(minutes: 15));
+      if (Platform.isAndroid) {
+        Workmanager().registerPeriodicTask(
+            "SincVisitasTerminadas", "Sincronizando visitas terminadas...",
+            tag: "tagsincronizavisitasterminadas",
+            frequency: const Duration(minutes: 15),
+            constraints: Constraints(
+                networkType: NetworkType.connected,
+                requiresBatteryNotLow: true),
+            initialDelay: const Duration(minutes: 15));
+      } else {
+        Workmanager().registerOneOffTask(
+            "SincVisitasTerminadas", "Sincronizando visitas terminadas...",
+            tag: "tagsincronizavisitasterminadas",
+            constraints: Constraints(
+                networkType: NetworkType.connected,
+                requiresBatteryNotLow: true),
+            initialDelay: const Duration(minutes: 15));
+      }
     } else {
       Workmanager().cancelByTag("tagsincronizavisitasterminadas");
     }
