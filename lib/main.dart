@@ -15,7 +15,9 @@ void callbackDispatcher() {
           task, "Sincronizando visitas terminadas...",
           tag: task,
           constraints: Constraints(
-              networkType: NetworkType.connected, requiresBatteryNotLow: true),
+              networkType: NetworkType.not_required,
+              requiresBatteryNotLow: false,
+              requiresCharging: false),
           initialDelay: const Duration(minutes: 15));
     }
     return Future.value(true);

@@ -24,8 +24,8 @@ class ConfiguracionProvider extends ChangeNotifier {
     if (value) {
       if (Platform.isAndroid) {
         Workmanager().registerPeriodicTask(
-            "tagobtieneasignacionesauto", "Obteniendo asignaciones...",
-            tag: "tagobtieneasignacionesauto",
+            spLlaveObtieneAsignAuto, "Obteniendo asignaciones...",
+            tag: spLlaveObtieneAsignAuto,
             frequency: const Duration(minutes: 15),
             constraints: Constraints(
                 networkType: NetworkType.connected,
@@ -33,15 +33,16 @@ class ConfiguracionProvider extends ChangeNotifier {
             initialDelay: const Duration(minutes: 15));
       } else {
         Workmanager().registerOneOffTask(
-            "tagobtieneasignacionesauto", "Obteniendo asignaciones...",
-            tag: "tagobtieneasignacionesauto",
+            spLlaveObtieneAsignAuto, "Obteniendo asignaciones...",
+            tag: spLlaveObtieneAsignAuto,
             constraints: Constraints(
-                networkType: NetworkType.connected,
-                requiresBatteryNotLow: true),
+                networkType: NetworkType.not_required,
+                requiresBatteryNotLow: false,
+                requiresCharging: false),
             initialDelay: const Duration(minutes: 15));
       }
     } else {
-      Workmanager().cancelByTag("tagobtieneasignacionesauto");
+      Workmanager().cancelByTag(spLlaveObtieneAsignAuto);
     }
     notifyListeners();
   }
@@ -52,8 +53,8 @@ class ConfiguracionProvider extends ChangeNotifier {
     if (value) {
       if (Platform.isAndroid) {
         Workmanager().registerPeriodicTask(
-            "SincVisitasTerminadas", "Sincronizando visitas terminadas...",
-            tag: "tagsincronizavisitasterminadas",
+            spLlaveSincronizaAuto, "Sincronizando visitas terminadas...",
+            tag: spLlaveSincronizaAuto,
             frequency: const Duration(minutes: 15),
             constraints: Constraints(
                 networkType: NetworkType.connected,
@@ -61,15 +62,16 @@ class ConfiguracionProvider extends ChangeNotifier {
             initialDelay: const Duration(minutes: 15));
       } else {
         Workmanager().registerOneOffTask(
-            "SincVisitasTerminadas", "Sincronizando visitas terminadas...",
-            tag: "tagsincronizavisitasterminadas",
+            spLlaveSincronizaAuto, "Sincronizando visitas terminadas...",
+            tag: spLlaveSincronizaAuto,
             constraints: Constraints(
-                networkType: NetworkType.connected,
-                requiresBatteryNotLow: true),
+                networkType: NetworkType.not_required,
+                requiresBatteryNotLow: false,
+                requiresCharging: false),
             initialDelay: const Duration(minutes: 15));
       }
     } else {
-      Workmanager().cancelByTag("tagsincronizavisitasterminadas");
+      Workmanager().cancelByTag(spLlaveSincronizaAuto);
     }
     notifyListeners();
   }
